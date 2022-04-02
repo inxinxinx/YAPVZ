@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class peashooter : MonoBehaviour
+public class peashooter : plantbase
 {
     public bool enemyFound;    //是否索敌
     public bool onshoot;       //是否达到时间间隔

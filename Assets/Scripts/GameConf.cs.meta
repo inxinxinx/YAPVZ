@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1c9ec43987506bb49ac9c0ddf66b9357
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Sun: {fileID: 1010598124020414728, guid: d95ef3b0657e09040b21695533f46c26, type: 3}
+  - SunFlower: {fileID: 7112591551279921398, guid: a3d8a63f61f80ce4f8744422a0f50436, type: 3}
+  - Peashooter: {fileID: 890226925633475476, guid: d92af46dc9c5e0e4c9887440a3e4a28b, type: 3}
+  - HighNut: {instanceID: 0}
+  - CherryBomb: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

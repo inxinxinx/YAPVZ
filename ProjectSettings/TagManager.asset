@@ -8,7 +8,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - nocollider
   - Water
   - UI
   - 
@@ -38,11 +38,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: transparent
+    uniqueID: 116786479
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: plant
     uniqueID: 652520037
+    locked: 0
+  - name: zombies
+    uniqueID: 1150305769
+    locked: 0
+  - name: shots
+    uniqueID: 3080334961
     locked: 0
   - name: drops
     uniqueID: 279803221
