@@ -12,6 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9ec43987506bb49ac9c0ddf66b9357, type: 3}
   m_Name: GameConf
   m_EditorClassIdentifier: 
+  EFAudio: {fileID: 2783780599993704617, guid: 132ed1058ed7f55479f6b54c5cb2b30c, type: 3}
+  ButtonClick: {fileID: 8300000, guid: bf03c1238140af74592e98ae79a41e7f, type: 3}
+  Pause: {fileID: 8300000, guid: b627f578f9e92a448848c591f0f00f3a, type: 3}
+  Shovel: {fileID: 8300000, guid: c22ba31d3689ada409e39c618e7c7708, type: 3}
+  Place: {fileID: 8300000, guid: cae4c9e57297f7f4b87518cff329c78c, type: 3}
+  SunClick: {fileID: 8300000, guid: 0254e0471fd5b2745b70eba41b278077, type: 3}
+  ZombieEat: {fileID: 8300000, guid: 95cec4a21ee77a444963e098a4bae57b, type: 3}
+  ZombieHurtForPea: {fileID: 8300000, guid: 6d85baddeb37c2e43bb8f351a38c1ea7, type: 3}
+  ZombieGroan: {fileID: 8300000, guid: 34ef520de284eb34fa5f144b3b80a5f0, type: 3}
+  GameOver: {fileID: 8300000, guid: 4d55a11ab67e2b6499d4b31886647f27, type: 3}
   Sun: {fileID: 1010598124020414728, guid: d95ef3b0657e09040b21695533f46c26, type: 3}
   SunFlower: {fileID: 7112591551279921398, guid: a3d8a63f61f80ce4f8744422a0f50436, type: 3}
   Peashooter: {fileID: 890226925633475476, guid: d92af46dc9c5e0e4c9887440a3e4a28b, type: 3}
@@ -22,3 +32,4 @@ MonoBehaviour:
   BulletHit: {fileID: 21300000, guid: 5e8ce824f33d2df44bc4ebb69bb9d269, type: 3}
   ZombieHead: {fileID: 2854041612333567985, guid: 420f5db324e347b4caeed1719a567953, type: 3}
   Zombie: {fileID: 4385402389661937718, guid: 0489afd7e6c066644bb6c74b468ee6b7, type: 3}
+  ZombieDead: {fileID: 3955688003786573913, guid: 35e608f658fa23045b6ab3424f8cc168, type: 3}

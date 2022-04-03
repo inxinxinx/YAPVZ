@@ -112,6 +112,7 @@ public class GridManager : MonoBehaviour
         return grid.Position;
     }
 
+
     private void Awake()
     {
         instance = this;

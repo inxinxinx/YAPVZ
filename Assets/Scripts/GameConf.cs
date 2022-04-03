@@ -5,6 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameConf", menuName = "GameConf")]
 public class GameConf : ScriptableObject
 {
+    [Header("“Ù¿÷")]
+    public GameObject EFAudio;
+    public AudioClip ButtonClick;
+    public AudioClip Pause;
+    public AudioClip Shovel;
+    public AudioClip Place;
+    public AudioClip SunClick;
+
+    public AudioClip ZombieEat;
+    public AudioClip ZombieHurtForPea;
+    public AudioClip ZombieGroan;
+
+    public AudioClip GameOver;
+
     [Tooltip("Sunlight")]
     public GameObject Sun;
 
@@ -22,5 +36,7 @@ public class GameConf : ScriptableObject
     public GameObject ZombieHead;
     public GameObject Zombie;
     public GameObject ZombieDead;
+
+    //public 
 
 }

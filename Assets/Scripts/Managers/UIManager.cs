@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public Text sunNumText;
+
+    private SetPanel setPanel;
     /*
     private card curCard;
 
@@ -27,6 +29,9 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
         sunNumText = transform.Find("SunNumber").GetComponent<Text>();
+        setPanel = transform.Find("SetPanel").GetComponent<SetPanel>();
+        setPanel.Show(false);
+
     }
 
     // Start is called before the first frame update
@@ -55,4 +60,8 @@ public class UIManager : MonoBehaviour
         sunNumText.text = num.ToString();
     }
 
+    public void ShowSetPanel()
+    {
+        setPanel.Show(true);
+    }
 }
