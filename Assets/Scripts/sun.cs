@@ -15,7 +15,7 @@ public class sun : MonoBehaviour
 
     private Rigidbody2D sunMass;
 
-    public void init(float x, float y)
+    public void initAtSky(float x, float y)
     {
         transform.position = new Vector3(x, createdSunMaxPosY, 0);
         createdPosX = x;
@@ -31,43 +31,22 @@ public class sun : MonoBehaviour
         textPos = new Vector3 (textPos.x, textPos.y + 0.4f, 0);
         FlyAnimation(textPos);
     }
-    /*
+
     //生成动画
-    private void CreateAnimation()
-    {
-        StartCoroutine(DoJump);
-    }
-    private IEnumerator DoJump()
-    {
-        Vector3 direction = (pos - transform.position).normalized;
-        while (Vector3.Distance(pos, transform.position) >= 0.5f)
-        {
-            yield return new WaitForSeconds(0.01f);
-            transform.Translate(direction);
-        }
-        DestroySun();
-    }
-    */
-    //生成动画
-    public void CreateAnimation(float sunFromFlowerPosY)
+    public void CreateAnimationBySunFlower(float sunFromFlowerPosY)
     {
         dropSun = false;
         sunMass = GetComponent<Rigidbody2D>();
         sunMass.gravityScale = 1;
         float forceX = Random.Range(-1f, 1f); ;
         sunMass.AddForce(new Vector3(forceX, 1, 0), ForceMode2D.Impulse);
-        //Invoke("stop", 1);
     }
     
     private void stop()
-    {
-        Debug.Log("2");
-        
-        //sunMass.AddForce(new Vector3(-forceX, 0, 0), ForceMode2D.Impulse);
+    {  
         sunMass.gravityScale = 0;
         sunMass.velocity = Vector2.zero;
         return;
-
     }
 
     //飞行动画
@@ -89,13 +68,12 @@ public class sun : MonoBehaviour
 
     private void DestroySun()
     {
-        Destroy(gameObject);
+        StopAllCoroutines();
+        CancelInvoke();
+
+        PoolManager.Instance.PushObj(LevelManager.instance.gameConf.Sun, gameObject);
     }
 
-    private void Awake()
-    {
-        
-    }
 
     // Start is called before the first frame update
     void Start()

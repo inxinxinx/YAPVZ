@@ -9,6 +9,7 @@ public abstract class plantbase : MonoBehaviour
     protected int hp;
     public bool beingAttacked;
 
+    protected GridList curGrid;
 
     protected Animator animator;
     public SpriteRenderer spriteRenderer;
@@ -30,6 +31,7 @@ public abstract class plantbase : MonoBehaviour
 
     private void Dead()
     {
+        curGrid.CurrPlantBase = null;
         Destroy(gameObject);
     }
     
@@ -56,6 +58,8 @@ public abstract class plantbase : MonoBehaviour
     {
         animator.speed = 1;
         spriteRenderer.sortingOrder = 0;
+        curGrid = grid;
+        
         grid.CurrPlantBase = this;
 
         OnInitForPlant();

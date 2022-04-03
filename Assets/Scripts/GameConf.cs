@@ -10,11 +10,15 @@ public class GameConf : ScriptableObject
 
     [Tooltip("SunFlower")]
     public GameObject SunFlower;
-
     public GameObject Peashooter;
-
     public GameObject HighNut;
-
     public GameObject CherryBomb;
+
+    public GameObject pea;
+
+    public Sprite BulletHit;
+
+    public GameObject ZombieHead;
+    public GameObject Zombie;
 
 }

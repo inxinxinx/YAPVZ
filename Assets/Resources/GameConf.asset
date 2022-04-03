@@ -17,3 +17,7 @@ MonoBehaviour:
   Peashooter: {fileID: 890226925633475476, guid: d92af46dc9c5e0e4c9887440a3e4a28b, type: 3}
   HighNut: {fileID: 1727883608407949715, guid: a77578191d38b65479d295babff378ff, type: 3}
   CherryBomb: {fileID: 0}
+  pea: {fileID: 6945424284602218595, guid: 49b682b50f468ce4bb8d68d7cd1152aa, type: 3}
+  BulletHit: {fileID: 21300000, guid: 5e8ce824f33d2df44bc4ebb69bb9d269, type: 3}
+  ZombieHead: {fileID: 2854041612333567985, guid: 420f5db324e347b4caeed1719a567953, type: 3}
+  Zombie: {fileID: 4385402389661937718, guid: 0489afd7e6c066644bb6c74b468ee6b7, type: 3}

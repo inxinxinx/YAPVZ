@@ -36,9 +36,10 @@ public class SunFlower : plantbase
 
     private void instantiateSun()
     {
-        sun Sun = GameObject.Instantiate<GameObject>(LevelManager.instance.gameConf.Sun, transform.position, Quaternion.identity, transform).GetComponent<sun>();
-        Sun.transform.localScale = new Vector3(1.25f, 1.25f, 0);
-        Sun.CreateAnimation(transform.position.y);
+        sun suninstance = PoolManager.Instance.GetObj(LevelManager.instance.gameConf.Sun).GetComponent<sun>();
+        suninstance.transform.SetParent(transform);
+        suninstance.transform.localScale = new Vector3(1.25f, 1.25f, 0);
+        suninstance.CreateAnimationBySunFlower(transform.position.y);
     }
 
     public override void OnInitForPlant()

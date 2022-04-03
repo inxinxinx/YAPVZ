@@ -141,6 +141,10 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (cost> LevelManager.instance.SunNumber)
+        {
+            return;
+        }
         if (!canClick)
             return;
         if (!WantPlace)
