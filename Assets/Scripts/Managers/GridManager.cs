@@ -82,7 +82,7 @@ public class GridManager : MonoBehaviour
 
     public GridList getClosestGrid(Vector3 Position)
     {
-        float distance = 3;
+        float distance = 1000;
         int temp = -1;
 
         for (int cnt = 0; cnt < 45; cnt++)
@@ -95,6 +95,7 @@ public class GridManager : MonoBehaviour
                 temp = cnt;
             }
         }
+        if(temp < 0)  return null;
         return gridList[temp];
     }
 

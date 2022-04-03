@@ -7,7 +7,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
-    private const int initialSunNumber = 100;
+    private const int initialSunNumber = 1000;
     private int sunNumber = 0;
     public GameConf gameConf { get; private set; } 
 

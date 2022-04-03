@@ -20,12 +20,12 @@ public class peashooter : plantbase
         if (zombie == null) return;
         if (zombie.curGrid.Point.x == 8 && (zombie.transform.position.x - zombie.curGrid.Position.x > 1.3f)) return;
 
-
-        Bullet bullet = GameObject.Instantiate<GameObject>(LevelManager.instance.gameConf.pea, transform.position + creatBulletOffsetPos, Quaternion.identity, transform).GetComponent<Bullet>();
-         bullet.init(atk);
+        Bullet bullet = PoolManager.Instance.GetObj(LevelManager.instance.gameConf.pea).GetComponent<Bullet>();
+        bullet.transform.SetParent(transform);
+        bullet.init(atk, transform.position + creatBulletOffsetPos);
         canAttack = false;
         CDEnter();
-        return ;
+        return;
     }
  
     // Start is called before the first frame update

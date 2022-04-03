@@ -8,28 +8,31 @@ public class Bullet : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private int atkValue;
+    private bool isHit;
 
     // Start is called before the first frame update
-    public void init(int attackValue)
+    public void init(int attackValue, Vector2 pos)
     {
+        transform.position = pos;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        transform.localScale = new Vector3(1f, 1f, 1f);
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(Vector2.right * 240);
-        atkValue = attackValue;
-    }
+        rb.gravityScale = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        //transform.Rotate(new Vector3(0, 0, -15));
+        atkValue = attackValue;
+        isHit = false;
+
+        //»»³É»÷ÖÐÍ¼Æ¬
+        spriteRenderer.sprite = LevelManager.instance.gameConf.Bullet;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Zombie")
+        if(collision.tag == "Zombie" && !isHit)
         {
             collision.GetComponentInParent<Zombie>().getHurt(atkValue);
-
+            isHit = true;
             //»»³É»÷ÖÐÍ¼Æ¬
             spriteRenderer.sprite = LevelManager.instance.gameConf.BulletHit;
 
@@ -42,6 +45,7 @@ public class Bullet : MonoBehaviour
 
     private void Destroy()
     {
-        Destroy(gameObject);
+        CancelInvoke();
+        PoolManager.Instance.PushObj(LevelManager.instance.gameConf.pea, gameObject);
     }
 }

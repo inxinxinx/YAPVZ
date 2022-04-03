@@ -19,6 +19,8 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private plantbase plant;           //被放置的植物
     private plantbase plantInGrid;     //网格中的虚影
 
+    private GameObject prefab;
+
     public bool WantPlace 
     {
         get => wantPlace;
@@ -28,14 +30,14 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             //选取植物实例化 并调整大小
             if (wantPlace)
             {
-                GameObject prefab = PlantManager.instance.GetPlantByType(plantType);
-                plant = GameObject.Instantiate<GameObject>(prefab, Vector3.zero, Quaternion.identity, PlantManager.instance.transform).GetComponent<plantbase>();
-                plant.transform.localScale = new Vector3(1.6f, 1.6f, 1f);
-                plant.InitForCreate(false);
+                prefab = PlantManager.instance.GetPlantByType(plantType);
+                plant = PoolManager.Instance.GetObj(prefab).GetComponent<plantbase>();
+                plant.transform.SetParent(PlantManager.instance.transform);
+                plant.InitForCreate(false, plantType);
             }
             else
             {
-                //Destroy(plant.gameObject);
+                plant.Dead();
                 plant = null;
             }
         }
@@ -64,8 +66,10 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 canPlace = true;
                 if(plantInGrid == null)
                 {
-                    plantInGrid = GameObject.Instantiate<GameObject>(plant.gameObject, gridPos, Quaternion.identity, PlantManager.instance.transform).GetComponent<plantbase>();
-                    plantInGrid.InitForCreate(true);
+                    plantInGrid = PoolManager.Instance.GetObj(prefab).GetComponent<plantbase>();
+                    plantInGrid.transform.SetParent(PlantManager.instance.transform);
+                    plantInGrid.transform.localPosition = gridPos;
+                    plantInGrid.InitForCreate(true, plantType);
                 }
                 else
                 {
@@ -89,12 +93,10 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 if (canPlace && !grid.HavePlant)
                 {
                     plant.transform.position = gridPos;
-                    plant.InitForPlant(grid, true);
+                    plant.InitForPlant(grid, plantType);
                     plant = null;
-                    if(plantInGrid.gameObject != null)
-                    {
-                    Destroy(plantInGrid.gameObject);
-                    }
+                    //if(plantInGrid.gameObject != null)
+                        plantInGrid.Dead();
                     plantInGrid = null;
                     wantPlace = false;
                     //canClick = false;
@@ -158,11 +160,11 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         if (plant != null)
         {
-            Destroy(plant.gameObject);
+            plant.Dead();
         }
         if (plantInGrid != null)
         {
-            Destroy(plantInGrid.gameObject);
+            plantInGrid.Dead();
         }
         plant = null;
         plantInGrid = null;

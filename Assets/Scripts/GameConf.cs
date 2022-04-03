@@ -16,6 +16,7 @@ public class GameConf : ScriptableObject
 
     public GameObject pea;
 
+    public Sprite Bullet;
     public Sprite BulletHit;
 
     public GameObject ZombieHead;

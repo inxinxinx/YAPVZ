@@ -19,7 +19,7 @@ public class Zombie : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
-    private bool isAttack = false;
+    private bool isAttack;
 
     private int lineOfArray;
     private float lineOfPosY;
@@ -35,7 +35,7 @@ public class Zombie : MonoBehaviour
     private int atk = 80;
     private float atkCD = 1f;
 
-    private bool isHeadLost = false;
+    private bool isHeadLost;
 
     public ZombieState State { 
         get => state;
@@ -57,10 +57,11 @@ public class Zombie : MonoBehaviour
                 curWalkAnimationToPlay = "ZombieLostHead";
                 curAtkAnimationToPlay = "ZombieLostHeadAtk";
                 //生成头
-                GameObject.Instantiate<GameObject>(LevelManager.instance.gameConf.ZombieHead, animator.transform.position, Quaternion.identity);
+                ZombieHead head = PoolManager.Instance.GetObj(LevelManager.instance.gameConf.ZombieHead).GetComponent<ZombieHead>();
+                head.Init(transform.position);
                 CheckState();
             }
-            if(hp > 0)
+            if(hp < 0)
             {
                 state = ZombieState.Dead;
             }
@@ -81,12 +82,16 @@ public class Zombie : MonoBehaviour
     public void init(int lineOfArray, int OrderNum)
     {
         Find();
+        hp = 270;
+        isHeadLost = false;
+        isAttack = false;
+
         animator.speed = 0.7f;
-
         lineOfPosY = -3.75f + 1.63f * lineOfArray;
-        getLineByVerticl(lineOfPosY);
-        curWalkAnimationToPlay = "ZombieWalk";
+        getLineByVerticl(lineOfPosY);                   //根据参数选择行数 并改变y坐标
 
+        curWalkAnimationToPlay = "ZombieWalk";
+        state = ZombieState.Idel;
         CheckOrder(OrderNum);
     }
 
@@ -147,6 +152,7 @@ public class Zombie : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        curGrid = GridManager.instance.getClosestGrid(transform.position);
     }
 
     public void getLineByVerticl(float verticalNum)
@@ -157,11 +163,10 @@ public class Zombie : MonoBehaviour
 
     private void Move()
     {
-
         //if (isAttack) return;
         
         curGrid = GridManager.instance.getClosestGrid(transform.position);
-
+        
         if (curGrid.HavePlant
             && curGrid.Position.x < transform.position.x
             && transform.position.x - curGrid.Position.x < 0.3f)
@@ -181,7 +186,7 @@ public class Zombie : MonoBehaviour
 
     IEnumerator DoAtk(float atkCD, plantbase plant)
     {
-        while (plant.Hp > 0) 
+        while (plant != null && plant.Hp > 0) 
         {
             yield return new WaitForSeconds(atkCD);
             plant.getHurt(atk / 2);
@@ -192,8 +197,10 @@ public class Zombie : MonoBehaviour
 
     private void Dead()
     {
+        curGrid = null;
+        StopAllCoroutines();
         ZombieManager.instance.RemoveZombie(this);
-        Destroy(gameObject);
+        PoolManager.Instance.PushObj(LevelManager.instance.gameConf.Zombie, gameObject);
     }
 
     public void getHurt(int atkValue)

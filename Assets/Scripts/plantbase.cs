@@ -14,6 +14,8 @@ public abstract class plantbase : MonoBehaviour
     protected Animator animator;
     public SpriteRenderer spriteRenderer;
 
+    private PlantType plantType;
+
     public int Hp { 
         get => hp; 
         //set => hp = value; 
@@ -28,33 +30,31 @@ public abstract class plantbase : MonoBehaviour
             Dead();
         }
     }
-
-    private void Dead()
-    {
-        curGrid.CurrPlantBase = null;
-        Destroy(gameObject);
-    }
     
-    public void Find()
+    public void InitialForall(PlantType type)
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        plantType = type;
+        
+        transform.localScale = new Vector3(1.6f, 1.6f, 1f);
+        spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 
-    public void InitForCreate(bool inGrid)
+    public void InitForCreate(bool inGrid, PlantType type)
     {
-        Find();
+        InitialForall(type);
         animator.speed = 0;
         if (inGrid)
         {
             spriteRenderer.sortingOrder = -1;
-            //Debug.Log("color");
             spriteRenderer.color = new Color(1, 1, 1, 0.65f);
+            return;
         }
-
+        spriteRenderer.sortingOrder = 1;
     }
 
-    public void InitForPlant(GridList grid, bool inGrid)
+    public void InitForPlant(GridList grid, PlantType type)
     {
         animator.speed = 1;
         spriteRenderer.sortingOrder = 0;
@@ -63,6 +63,18 @@ public abstract class plantbase : MonoBehaviour
         grid.CurrPlantBase = this;
 
         OnInitForPlant();
+    }
+
+    public void Dead()
+    {
+        if(curGrid != null)
+        {
+            curGrid.CurrPlantBase = null;
+            curGrid = null;
+        }
+        StopAllCoroutines();
+        CancelInvoke();
+        PoolManager.Instance.PushObj(PlantManager.instance.GetPlantByType(plantType), gameObject);
     }
 
     public virtual void OnInitForPlant()

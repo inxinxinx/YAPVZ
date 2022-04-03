@@ -7,9 +7,13 @@ public class ZombieHead : MonoBehaviour
     private Animator animator;
     private bool isOver;
 
-    private void Start()
-    {
-        animator = GetComponent<Animator>();    
+    public void Init(Vector3 pos)
+    {   
+        animator = GetComponent<Animator>();
+        transform.position = pos;
+        isOver = false;
+        animator.speed = 1;
+        animator.Play("LostHead", 0, 0);
     }
 
     // Update is called once per frame
@@ -19,7 +23,13 @@ public class ZombieHead : MonoBehaviour
         {
             isOver = true;
             animator.speed = 0;
-            Destroy(gameObject, 2);
+            Invoke("Dead", 2);
         }
+    }
+
+    private void Dead()
+    {
+        CancelInvoke();
+        PoolManager.Instance.PushObj(LevelManager.instance.gameConf.ZombieHead, gameObject);
     }
 }

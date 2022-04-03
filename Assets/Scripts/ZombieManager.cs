@@ -27,15 +27,30 @@ public class ZombieManager : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("CreateZombie", 0, 1);
+        //InvokeRepeating("CreateZombie", 0, 1);
     }
 
-    private void CreateZombie()
+    private void Update()
     {
-        Zombie zombie = GameObject.Instantiate<GameObject>(LevelManager.instance.gameConf.Zombie, new Vector3(7.3f, 0, 0), Quaternion.identity, transform).GetComponent<Zombie>();
-        if (zombie == null) Debug.Log("1");
+        if (Input.GetMouseButtonDown(0))
+        {
+            CreateZombie(0);
+            CreateZombie(1);
+            CreateZombie(2);
+            CreateZombie(3);
+            CreateZombie(4);
+        }
+    }
+
+    private void CreateZombie(int LineNum)
+    {
+        Zombie zombie = PoolManager.Instance.GetObj(LevelManager.instance.gameConf.Zombie).GetComponent<Zombie>();
         AddZombie(zombie);
-        zombie.init(2, orderInLine);
+        zombie.transform.SetParent(transform);
+        zombie.transform.position = new Vector3(7.3f, 0, 0);
+        Debug.Log(zombie.transform.position);
+        zombie.init(LineNum, orderInLine);
+        Debug.Log(zombie.transform.position);
         orderInLine++;
     }
 

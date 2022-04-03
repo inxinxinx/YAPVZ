@@ -20,7 +20,8 @@ public class sun : MonoBehaviour
         transform.position = new Vector3(x, createdSunMaxPosY, 0);
         createdPosX = x;
         dropToPosY = y;
-
+        sunMass = GetComponent<Rigidbody2D>();
+        sunMass.gravityScale = 0;
         return;
     }
 
@@ -33,13 +34,19 @@ public class sun : MonoBehaviour
     }
 
     //Éú³É¶¯»­
-    public void CreateAnimationBySunFlower(float sunFromFlowerPosY)
+    public void CreateAnimationBySunFlower(Vector3 pos)
     {
+        transform.position = pos;
         dropSun = false;
         sunMass = GetComponent<Rigidbody2D>();
         sunMass.gravityScale = 1;
-        float forceX = Random.Range(-1f, 1f); ;
+        float forceX = Random.Range(-1f, 1f); 
         sunMass.AddForce(new Vector3(forceX, 1, 0), ForceMode2D.Impulse);
+        dropSun = false;
+        if (!dropSun)
+        {
+            Invoke("stop", 0.4f);
+        }
     }
     
     private void stop()
@@ -70,7 +77,6 @@ public class sun : MonoBehaviour
     {
         StopAllCoroutines();
         CancelInvoke();
-
         PoolManager.Instance.PushObj(LevelManager.instance.gameConf.Sun, gameObject);
     }
 
@@ -78,12 +84,7 @@ public class sun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!dropSun)
-        {
-            Invoke("stop", 0.4f);
-        }
-        Destroy(gameObject,18);
-        
+        Invoke("DestroySun", 18);
     }
 
     // Update is called once per frame
@@ -97,6 +98,5 @@ public class sun : MonoBehaviour
             }
             transform.Translate(Vector3.down * Time.deltaTime);
         }
-        
     }
 }
