@@ -7,7 +7,22 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public Text sunNumText;
+    /*
+    private card curCard;
 
+    public card CurCard { get => curCard;
+        set
+        {
+            //清空之前卡片的状态
+            if(curCard != null)
+            {
+                curCard.WantPlace = false;
+            }
+            curCard = value;
+
+        }
+    }
+    */
     private void Awake()
     {
         Instance = this;

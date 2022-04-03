@@ -21,7 +21,6 @@ public class Zombie : MonoBehaviour
 
     private bool isAttack;
 
-    private int lineOfArray;
     private float lineOfPosY;
 
     public GridList curGrid;
@@ -64,6 +63,8 @@ public class Zombie : MonoBehaviour
             if(hp < 0)
             {
                 state = ZombieState.Dead;
+                ZombieDead death = PoolManager.Instance.GetObj(LevelManager.instance.gameConf.ZombieDead).GetComponent<ZombieDead>();
+                death.Init(animator.transform.position);
             }
         }
     }

@@ -37,7 +37,8 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
             else
             {
-                plant.Dead();
+                if(plant != null)
+                    plant.Dead();
                 plant = null;
             }
         }

@@ -43,6 +43,7 @@ public class peashooter : plantbase
     public override void OnInitForPlant()
     {
         hp = 300;
+        canAttack = true;
         InvokeRepeating("shoot", 0, 0.3f);
     }
 

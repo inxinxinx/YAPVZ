@@ -32,7 +32,8 @@ public class ZombieManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        
+        if (Input.GetMouseButtonDown(1))
         {
             CreateZombie(0);
             CreateZombie(1);
@@ -40,6 +41,7 @@ public class ZombieManager : MonoBehaviour
             CreateZombie(3);
             CreateZombie(4);
         }
+        
     }
 
     private void CreateZombie(int LineNum)

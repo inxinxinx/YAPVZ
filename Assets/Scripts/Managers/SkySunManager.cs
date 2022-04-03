@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SkySunManager : MonoBehaviour
 {
+    public static SkySunManager instance;
     //生成时y轴位置
     private float createdSunMaxPosY = 6;
 
@@ -17,6 +18,10 @@ public class SkySunManager : MonoBehaviour
 
     public GameObject Prefab_Sun;
 
+    public void StartCreatSun(float delay)
+    {
+        InvokeRepeating("CreateSun", delay, delay);
+    }
 
     public void creatSun()
     {   
@@ -29,15 +34,14 @@ public class SkySunManager : MonoBehaviour
         suninstance.initAtSky(x, y1);
     }
 
+    public void StopCreatSun()
+    {
+        CancelInvoke();
+    }
+
     private void Awake()
     {
         Prefab_Sun = Resources.Load<GameObject>("Prefabs/sun");
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Prefab_Sun = Resources.Load<GameObject>("sun");
-        InvokeRepeating("creatSun", 3, 10);
-    }
 }

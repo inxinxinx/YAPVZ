@@ -21,5 +21,6 @@ public class GameConf : ScriptableObject
 
     public GameObject ZombieHead;
     public GameObject Zombie;
+    public GameObject ZombieDead;
 
 }
