@@ -17,13 +17,17 @@ public abstract class plantbase : MonoBehaviour
     private PlantType plantType;
 
     public int Hp { 
-        get => hp; 
-        //set => hp = value; 
+        get => hp;
+        protected set
+        {
+            hp = value;
+            HpUpdateEvent();
+        }
     }
 
     public void getHurt(int atkValue)
     {
-        hp -= atkValue;
+        Hp -= atkValue;
         StartCoroutine(ColorEF(0.5f, new Color(0.6f, 0.6f, 0.6f, 0.9f), 0.05f, null));
         if (Hp <= 0)
         {
@@ -36,8 +40,10 @@ public abstract class plantbase : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         plantType = type;
-        
-        transform.localScale = new Vector3(1.6f, 1.6f, 1f);
+        if(type != PlantType.WallNut)
+        {
+            transform.localScale = new Vector3(1.6f, 1.6f, 1f);
+        }
         spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 
@@ -79,10 +85,9 @@ public abstract class plantbase : MonoBehaviour
         PoolManager.Instance.PushObj(PlantManager.instance.GetPlantByType(plantType), gameObject);
     }
 
-    public virtual void OnInitForPlant()
-    {
+    public virtual void OnInitForPlant() {}
 
-    }
+    protected virtual void HpUpdateEvent() { }
 
     protected IEnumerator ColorEF(float wantTime, Color targetColor, float delayTime, UnityAction fun)
     {

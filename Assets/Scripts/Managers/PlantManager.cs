@@ -7,7 +7,8 @@ public enum PlantType
     SunFlower,
     Peashooter,
     HighNut,
-    CherryBomb
+    CherryBomb,
+    WallNut
 }
 
 public class PlantManager : MonoBehaviour
@@ -34,6 +35,9 @@ public class PlantManager : MonoBehaviour
             
             case PlantType.CherryBomb:
                 return LevelManager.instance.gameConf.CherryBomb;
+
+            case PlantType.WallNut:
+                return LevelManager.instance.gameConf.WallNut;
             default:
                 return null;
         }
@@ -54,6 +58,9 @@ public class PlantManager : MonoBehaviour
 
             case PlantType.CherryBomb:
                 return 0;
+
+            case PlantType.WallNut:
+                return 50;
             default:
                 return 0;
         }

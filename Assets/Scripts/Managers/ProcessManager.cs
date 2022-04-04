@@ -40,7 +40,6 @@ public class ProcessManager : MonoBehaviour
                     break;
                 case LvState.fighting:
                     AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.ZombieComing);
-                    // 20秒以后刷一只僵尸
                     UpdateZombie(3, 1);
                     break;
                 case LvState.end:
@@ -116,7 +115,6 @@ public class ProcessManager : MonoBehaviour
         // 清理掉僵尸
         ZombieManager.instance.ClearZombie();
         Invoke("StartFighting", levelConf.firstZombie);
-
         // 关卡开始时需要做的事情
         if (LVStartAction != null) LVStartAction();
     }

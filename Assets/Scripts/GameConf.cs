@@ -29,6 +29,7 @@ public class GameConf : ScriptableObject
     public GameObject Peashooter;
     public GameObject HighNut;
     public GameObject CherryBomb;
+    public GameObject WallNut;
 
     public GameObject pea;
 
