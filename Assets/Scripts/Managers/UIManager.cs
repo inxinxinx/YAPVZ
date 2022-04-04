@@ -9,28 +9,20 @@ public class UIManager : MonoBehaviour
     public Text sunNumText;
 
     private SetPanel setPanel;
-    /*
-    private card curCard;
+    private OverPanel overPanel;
+    private LVStartEF lvStart;
 
-    public card CurCard { get => curCard;
-        set
-        {
-            //清空之前卡片的状态
-            if(curCard != null)
-            {
-                curCard.WantPlace = false;
-            }
-            curCard = value;
-
-        }
-    }
-    */
     private void Awake()
     {
         Instance = this;
         sunNumText = transform.Find("SunNumber").GetComponent<Text>();
+
+        lvStart = transform.Find("LVStartEF").GetComponent<LVStartEF>();
+
         setPanel = transform.Find("SetPanel").GetComponent<SetPanel>();
-        setPanel.Show(false);
+        setPanel.gameObject.SetActive(false);
+
+        overPanel = transform.Find("OverPanel").GetComponent<OverPanel>();
 
     }
 
@@ -39,7 +31,6 @@ public class UIManager : MonoBehaviour
     {
         //sunNumText = GameObject.Find("SunNumber").GetComponent<Text>();
         //为啥不能用transform.Find 为啥放上去就行了
-
     }
 
     // Update is called once per frame
@@ -64,4 +55,31 @@ public class UIManager : MonoBehaviour
     {
         setPanel.Show(true);
     }
+
+    public void ShowLVStartEF()
+    {
+        lvStart.Show();
+    }
+
+    public void ShowOverPanel()
+    {
+        overPanel.Over();
+    }
+
+    /*
+    private card curCard;
+
+    public card CurCard { get => curCard;
+        set
+        {
+            //清空之前卡片的状态
+            if(curCard != null)
+            {
+                curCard.WantPlace = false;
+            }
+            curCard = value;
+
+        }
+    }
+    */
 }

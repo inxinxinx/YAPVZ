@@ -7,7 +7,7 @@ public class SetPanel : MonoBehaviour
 {
     public void Show(bool isShow)
     {
-        //AudioManager.Instance.PlayEFAudio(GameManager.Instance.GameConf.ButtonClick);
+        AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.Pause);
         gameObject.SetActive(isShow);
         // 如果显示出来，意味着游戏暂停
         if (isShow)
@@ -17,26 +17,25 @@ public class SetPanel : MonoBehaviour
         else
         {
             Time.timeScale = 1;
-
         }
-
     }
 
     public void BackMainScene()
     {
         PoolManager.Instance.Clear();
-        //AudioManager.Instance.PlayEFAudio(GameManager.Instance.GameConf.ButtonClick);
+        AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.ButtonClick);
         Time.timeScale = 1;
         Invoke("DoBackMainScene", 0.5f);
     }
-
+    /*
     private void DoBackMainScene()
     {
         SceneManager.LoadScene("Start");
     }
+    */
     public void Quit()
     {
-        //AudioManager.Instance.PlayEFAudio(GameManager.Instance.GameConf.ButtonClick);
+        AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.ButtonClick);
         Application.Quit();
     }
 }

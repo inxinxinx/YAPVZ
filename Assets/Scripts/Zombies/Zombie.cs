@@ -35,6 +35,7 @@ public class Zombie : MonoBehaviour
     private float atkCD = 1f;
 
     private bool isHeadLost;
+    private bool isOver = false;
 
     public ZombieState State { 
         get => state;
@@ -62,7 +63,7 @@ public class Zombie : MonoBehaviour
             }
             if(hp < 0)
             {
-                state = ZombieState.Dead;
+                State = ZombieState.Dead;
                 ZombieDead death = PoolManager.Instance.GetObj(LevelManager.instance.gameConf.ZombieDead).GetComponent<ZombieDead>();
                 death.Init(animator.transform.position);
             }
@@ -92,14 +93,15 @@ public class Zombie : MonoBehaviour
         getLineByVerticl(lineOfPosY);                   //根据参数选择行数 并改变y坐标
 
         curWalkAnimationToPlay = "ZombieWalk";
-        state = ZombieState.Idel;
+        curAtkAnimationToPlay = "ZombieAttack";
+        State = ZombieState.Idel;
         CheckOrder(OrderNum);
     }
 
     //单次状态检测
     private void CheckState()
     {
-        switch (state)
+        switch (State)
         {
             case ZombieState.Idel:
                 animator.Play("ZombieWalk", 0, 0);
@@ -176,6 +178,23 @@ public class Zombie : MonoBehaviour
             return;
         }
 
+        else if (curGrid.Point.x == 0 && curGrid.Position.x - transform.position.x > 1.2f)
+        {
+            // 我们要走向终点 - 房子
+            Vector2 pos = transform.position;
+            Vector2 target = new Vector2(-9.17f, -0.87f);
+            Vector2 dir = (target - pos).normalized * 3f;
+            transform.Translate((dir * (Time.deltaTime / 1)) / speed);
+            
+            // 如果我距离终点很近，意味着游戏结束
+            if (Vector2.Distance(target, pos) < 0.3f && !isOver)
+            {
+                // 触发游戏结束
+                isOver = true;
+                ProcessManager.Instance.GameOver();
+            }
+            return;
+        }
         transform.Translate((new Vector2(-1.33f, 0) * (Time.deltaTime / 1)) / speed);
     }
 
@@ -187,8 +206,22 @@ public class Zombie : MonoBehaviour
 
     IEnumerator DoAtk(float atkCD, plantbase plant)
     {
-        while (plant != null && plant.Hp > 0) 
+        int num = 0;
+        while (curGrid.HavePlant && plant.Hp > 0) 
         {
+            if (num == 5) num = 0;
+            // 播放僵尸吃植物的音效
+            if (num == 0)
+            {
+                if (num == 5) num = 0;
+                // 播放僵尸吃植物的音效
+                if (num == 0)
+                {
+                    AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.ZombieEat);
+                }
+                num += 1;
+            }
+            num += 1;
             yield return new WaitForSeconds(atkCD);
             plant.getHurt(atk / 2);
         }
@@ -196,7 +229,12 @@ public class Zombie : MonoBehaviour
         State = ZombieState.Walk;
     }
 
-    private void Dead()
+    public void StartMove()
+    {
+        State = ZombieState.Walk;
+    }
+
+    public void Dead()
     {
         curGrid = null;
         StopAllCoroutines();
@@ -207,7 +245,10 @@ public class Zombie : MonoBehaviour
     public void getHurt(int atkValue)
     {
         Hp -= atkValue;
-        StartCoroutine(ColorEF(0.2f, new Color(0.6f, 0.6f, 0.6f), 0.05f, null));
+        if(Hp > 20)
+        {
+            StartCoroutine(ColorEF(0.2f, new Color(0.6f, 0.6f, 0.6f), 0.05f, null));
+        }
     }
 
     protected IEnumerator ColorEF(float wantTime, Color targetColor, float delayTime, UnityAction fun)

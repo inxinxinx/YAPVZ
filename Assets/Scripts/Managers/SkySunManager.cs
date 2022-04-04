@@ -23,7 +23,7 @@ public class SkySunManager : MonoBehaviour
         InvokeRepeating("CreateSun", delay, delay);
     }
 
-    public void creatSun()
+    public void CreateSun()
     {   
         float y0 = createdSunMaxPosY;
         float x = Random.Range(createdSunMinPosX, createdSunMaxPosX);
@@ -42,6 +42,7 @@ public class SkySunManager : MonoBehaviour
     private void Awake()
     {
         Prefab_Sun = Resources.Load<GameObject>("Prefabs/sun");
+        instance = this;
     }
 
 }

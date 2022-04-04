@@ -103,6 +103,7 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     //canClick = false;
                     LevelManager.instance.SunNumber -= PlantManager.instance.GetCostByType(plantType);
                     grid.HavePlant = true;
+                    AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.Place);          //???
                 }
                 else
                 {
@@ -144,6 +145,7 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
+
         if (cost> LevelManager.instance.SunNumber)
         {
             return;
@@ -152,6 +154,7 @@ public class card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             return;
         if (!WantPlace)
         {
+            //AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.ButtonClick);
             WantPlace = true;
             return;
         }

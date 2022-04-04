@@ -17,6 +17,8 @@ public class GameConf : ScriptableObject
     public AudioClip ZombieHurtForPea;
     public AudioClip ZombieGroan;
 
+    public AudioClip ZombieComing;
+
     public AudioClip GameOver;
 
     [Tooltip("Sunlight")]
@@ -36,6 +38,8 @@ public class GameConf : ScriptableObject
     public GameObject ZombieHead;
     public GameObject Zombie;
     public GameObject ZombieDead;
+
+    
 
     //public 
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-/*
+
 public enum LvState
 {
     start,
@@ -16,7 +16,7 @@ public class ProcessManager : MonoBehaviour
     private LvState currLVState;
     //当前关卡信息
     private int level = 1;
-    private LevelConf levelConf;
+    private LevelConf levelConf = new LevelConf();
 
     private bool isOver;
     // 在刷新僵尸中
@@ -36,10 +36,10 @@ public class ProcessManager : MonoBehaviour
             switch (currLVState)
             {
                 case LvState.start:
+                    LVStart();
                     break;
                 case LvState.fighting:
-                    // 显示主面板
-                    //UIManager.Instance.SetMainPanelActive(true);
+                    AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.ZombieComing);
                     // 20秒以后刷一只僵尸
                     UpdateZombie(3, 1);
                     break;
@@ -66,17 +66,15 @@ public class ProcessManager : MonoBehaviour
         }
     }*/
 
-
-/*
-
-
     private void Awake()
     {
         Instance = this;
     }
+
     private void Start()
     {
         levelConf.getLevelConf(level);
+        CurrLVState = LvState.start;
     }
     // 开始关卡
     
@@ -85,6 +83,7 @@ public class ProcessManager : MonoBehaviour
         if (isOver) return;
         FSM();
     }
+
     public void FSM()
     {
         switch (CurrLVState)
@@ -107,10 +106,8 @@ public class ProcessManager : MonoBehaviour
                 break;
         }
     }
-    /// <summary>
-    /// 关卡开始时 摄像机回归后要执行的方法
-    /// </summary>
-    private void LVStartCameraBackAction()
+
+    private void LVStart()
     {
         // 让阳光开始创建
         SkySunManager.instance.StartCreatSun(levelConf.firstZombie);
@@ -118,12 +115,17 @@ public class ProcessManager : MonoBehaviour
         UIManager.Instance.ShowLVStartEF();
         // 清理掉僵尸
         ZombieManager.instance.ClearZombie();
-        CurrLVState = LvState.fighting;
+        Invoke("StartFighting", levelConf.firstZombie);
 
         // 关卡开始时需要做的事情
         if (LVStartAction != null) LVStartAction();
-
     }
+
+    private void StartFighting()
+    {
+        currLVState = LvState.fighting;
+    }
+
     /// <summary>
     /// 更新僵尸
     /// </summary>
@@ -139,7 +141,6 @@ public class ProcessManager : MonoBehaviour
         ZombieManager.instance.UpdateZombie(zombieNum);
         ZombieManager.instance.ZombieStartMove();
         isUpdatingZombie = false;
-        StageInLV += 1;
     }
     /// <summary>
     /// 添加关卡开始事件的监听者
@@ -154,10 +155,23 @@ public class ProcessManager : MonoBehaviour
     /// </summary>
     private void OnAllZombieDeadAction()
     {
-        // 更新天数
-        CurrLV += 1;
         // 执行一次之后，自己移除委托
         ZombieManager.instance.RemoveAllZombieDeadAction(OnAllZombieDeadAction);
+        // 播放胜利
+        winwinwin();
+    }
+
+    private void winwinwin()
+    {
+        StopAllCoroutines();
+        AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.GameOver);
+
+        isOver = true;
+        // 逻辑
+        SkySunManager.instance.StopCreatSun();
+        ZombieManager.instance.ClearZombie();
+
+        //UIManager.Instance.Win();
     }
 
     /// <summary>
@@ -167,8 +181,8 @@ public class ProcessManager : MonoBehaviour
     {
         StopAllCoroutines();
         // 效果d
-        //AudioManager.Instance.PlayEFAudio(GameManager.Instance.GameConf.ZombieEat);
-        //AudioManager.Instance.PlayEFAudio(GameManager.Instance.GameConf.GameOver);
+        AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.ZombieEat);
+        AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.GameOver);
 
         isOver = true;
         // 逻辑
@@ -176,8 +190,6 @@ public class ProcessManager : MonoBehaviour
         ZombieManager.instance.ClearZombie();
 
         // UI
-        UIManager.Instance.GameOver();
+        UIManager.Instance.ShowOverPanel();
     }
 }
-
-*/

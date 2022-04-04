@@ -35,6 +35,7 @@ public class Bullet : MonoBehaviour
             isHit = true;
             //»»³É»÷ÖÐÍ¼Æ¬
             spriteRenderer.sprite = LevelManager.instance.gameConf.BulletHit;
+            AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.ZombieHurtForPea);
 
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0.5f;

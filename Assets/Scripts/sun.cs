@@ -31,6 +31,7 @@ public class sun : MonoBehaviour
         Vector3 textPos = Camera.main.ScreenToWorldPoint(UIManager.Instance.getTextPos());
         textPos = new Vector3 (textPos.x, textPos.y + 0.4f, 0);
         FlyAnimation(textPos);
+        AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.SunClick);
     }
 
     //Éú³É¶¯»­

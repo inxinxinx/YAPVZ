@@ -72,6 +72,8 @@ public abstract class plantbase : MonoBehaviour
             curGrid.CurrPlantBase = null;
             curGrid = null;
         }
+        //AudioManager.Instance.PlayEFAudio(LevelManager.instance.gameConf.);
+
         StopAllCoroutines();
         CancelInvoke();
         PoolManager.Instance.PushObj(PlantManager.instance.GetPlantByType(plantType), gameObject);
